@@ -41,7 +41,7 @@ export default function Header() {
             <ul className="navbar-nav">
               <li className="nav-item  ">
                 <Link to={'/products/woman'} className="nav-link pb-0">
-                  Woman
+                  Women
                 </Link>
               </li>
               <li className="nav-item p-0">

@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default function Woman() {
+export default function Women() {
     return (
         <div>
-          Woman  
+          Women  
         </div>
     );
 }

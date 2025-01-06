@@ -6,10 +6,10 @@ import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import NotFound from './page/NotFound';
 import Home from './page/Home';
-import Woman from './page/Woman';
 import Man from './page/Man';
 import ProductDetail from './page/ProductDetail';
 import MyCart from './page/MyCart';
+import Women from './page/Women';
 
 const router = createBrowserRouter([
   {
@@ -18,7 +18,7 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       { index: true, path: '/', element: <Home /> },
-      { path: '/products/woman', element: <Woman /> },
+      { path: '/products/woman', element:<Women/>  },
       { path: '/products/man', element: <Man /> },
       { path: '/products/:id', element: <ProductDetail /> },
       { path: '/cart', element: <MyCart /> },
