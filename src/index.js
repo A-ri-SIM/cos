@@ -18,7 +18,7 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       { index: true, path: '/', element: <Home /> },
-      { path: '/products/woman', element:<Women/>  },
+      { path: '/products/women', element:<Women/>  },
       { path: '/products/man', element: <Man /> },
       { path: '/products/:id', element: <ProductDetail /> },
       { path: '/cart', element: <MyCart /> },

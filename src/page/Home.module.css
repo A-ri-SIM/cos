@@ -1,49 +1,15 @@
-#w_back{
-    position: relative;
+#carouselExampleInterval {
+  transition: all ease-out;
+}
+#w_inner {
+  width: 80%;
 }
 
-#w_back::after{
-    content: "";
-    background:url(../../public/img/woman_main.jpg) ;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0.8;
+#m_inner {
+  width: 80%;
+  margin-top: -5%;
 }
 
-#w_inner{
-    width: 65%;
-    height: 85%;
-    position: relative;
-    z-index: 1;
-
-}
-
-#m_back{
-    position: relative;
-}
-
-#m_back::after{
-    content: "";
-    background:url(../../public/img/woman_main.jpg) ;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0.8;
-}
-
-#m_inner{
-    width: 65%;
-    height: 85%;
-    position: relative;
-    z-index: 1;
-
+#m_back {
+  position: relative;
 }
