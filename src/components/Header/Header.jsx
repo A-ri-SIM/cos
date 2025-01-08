@@ -1,16 +1,26 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import styles from './Header.module.css';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import styles from "./Header.module.css";
+import { login, logout, onAuthStateChange } from "../../api/firebase";
+import User from "../User/User";
 
 export default function Header() {
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    onAuthStateChange((user) => {
+      setUser(user);
+    });
+  }, []);
+
   return (
     <nav
-      className="navbar navbar-expand-lg navbar-light w-100 bg-white fixed-top"
+      className="navbar navbar-expand-lg navbar-light w-100 bg-white fixed-top pt-0"
       id={styles.header}
     >
       <div className="container-fluid w-100  d-flex justify-content-between align-items-end ">
         <Link
-          to={'/'}
+          to={"/"}
           id={styles.logo}
           className="navbar-brand mx-1 pb-0"
           aria-current="page"
@@ -40,12 +50,12 @@ export default function Header() {
           <div>
             <ul className="navbar-nav">
               <li className="nav-item  ">
-                <Link to={'/products/woman'} className="nav-link pb-0">
+                <Link to={"/products/woman"} className="nav-link pb-0">
                   Women
                 </Link>
               </li>
               <li className="nav-item p-0">
-                <Link to={'/products/man'} className="nav-link pb-0">
+                <Link to={"/products/man"} className="nav-link pb-0">
                   Man
                 </Link>
               </li>
@@ -56,8 +66,30 @@ export default function Header() {
               <li className="nav-item">
                 <Link className="nav-link pb-0">cart</Link>
               </li>
+              <li className="nav-item pb-0 d-flex align-items-end">
+                {user && <User user={user} />}
+              </li>
               <li className="nav-item">
-                <Link className="nav-link pb-0">login</Link>
+                {!user && (
+                  <button
+                    onClick={() => {
+                      login();
+                    }}
+                    className="nav-link pb-0"
+                  >
+                    login
+                  </button>
+                )}
+                {user && (
+                  <button
+                    onClick={() => {
+                      logout();
+                    }}
+                    className="nav-link pb-0"
+                  >
+                    logout
+                  </button>
+                )}
               </li>
             </ul>
           </div>

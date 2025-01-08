@@ -1,15 +1,27 @@
 #carouselExampleInterval {
   transition: all ease-out;
 }
-#w_inner {
-  width: 80%;
+
+@media (min-width: 769px) {
+  #w_inner {
+    width: 80%;
+  }
+
+  #m_inner {
+    width: 80%;
+    margin-top: -5%;
+  }
 }
 
-#m_inner {
-  width: 80%;
-  margin-top: -5%;
-}
+@media (max-width: 768px) {
+  #w_inner {
+    width: auto;
+    height: 100%;
+  }
 
-#m_back {
-  position: relative;
+  #m_inner {
+    width: auto;
+    height: 100%;
+    margin-top: -0;
+  }
 }

@@ -26,14 +26,22 @@ export default function Home() {
                   className="d-block"
                   alt="woman_main"
                 />
-                <img className="h-100" src="/img/main_logo_left.png" alt="" />
+                <img
+                  className="h-100 d-none d-md-block"
+                  src="/img/main_logo_left.png"
+                  alt=""
+                />
               </div>
             </Link>
           </div>
           <div className="carousel-item w-100 h-100" data-bs-interval="8000">
             <Link to={"/products/man"} aria-current="page">
               <div className="d-flex justify-content-between">
-                <img className="h-100" src="/img/main_logo_right.png" alt="" />
+                <img
+                  className="h-100 d-none d-md-block"
+                  src="/img/main_logo_right.png"
+                  alt=""
+                />
                 <img
                   id={styles.m_inner}
                   src="/img/man_main.jpg"
