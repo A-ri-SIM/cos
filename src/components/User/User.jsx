@@ -3,7 +3,7 @@ import styles from "./User.module.css";
 
 export default function User({ user: { photoURL, diplayName } }) {
   return (
-    <div>
+    <div className="d-none d-lg-block">
       <img
         id={styles.userImg}
         className="rounded-circle mx-2 "

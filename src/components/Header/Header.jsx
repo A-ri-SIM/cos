@@ -3,15 +3,11 @@ import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import { login, logout, onAuthStateChange } from "../../api/firebase";
 import User from "../User/User";
+import { FiPlus } from "react-icons/fi";
+import { useAuthContext } from "../context/AuthContext";
 
 export default function Header() {
-  const [user, setUser] = useState();
-
-  useEffect(() => {
-    onAuthStateChange((user) => {
-      setUser(user);
-    });
-  }, []);
+  const { user, login, logout } = useAuthContext();
 
   return (
     <nav
@@ -22,7 +18,7 @@ export default function Header() {
         <Link
           to={"/"}
           id={styles.logo}
-          className="navbar-brand mx-1 pb-0"
+          className="navbar-brand mx-1 d-flex align-items-end"
           aria-current="page"
         >
           <img
@@ -33,7 +29,7 @@ export default function Header() {
         </Link>
 
         <button
-          className="navbar-toggler border-0"
+          className="navbar-toggler border-0 pb-0"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
@@ -44,12 +40,12 @@ export default function Header() {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div
-          className="w-100 collapse navbar-collapse md:d-flex justify-content-between"
+          className="w-100 collapse navbar-collapse md:d-flex justify-content-between align-items-end"
           id="navbarNav"
         >
           <div>
             <ul className="navbar-nav">
-              <li className="nav-item  ">
+              <li className="nav-item">
                 <Link to={"/products/woman"} className="nav-link pb-0">
                   Women
                 </Link>
@@ -63,13 +59,21 @@ export default function Header() {
           </div>
           <div>
             <ul className="navbar-nav ">
-              <li className="nav-item">
+              <li className="nav-item ">
                 <Link className="nav-link pb-0">cart</Link>
               </li>
-              <li className="nav-item pb-0 d-flex align-items-end">
+              {user && user.isAdmin && (
+                <li className="nav-item d-flex align-items-end ">
+                  <Link to={"/products/new"} className="nav-link  py-0">
+                    <FiPlus className="d-none d-lg-block pb-1" />
+                    <p className="d-lg-none pt-2 m-0">new</p>
+                  </Link>
+                </li>
+              )}
+              <li className="nav-item d-flex align-items-end">
                 {user && <User user={user} />}
               </li>
-              <li className="nav-item">
+              <li className="nav-item pb-0">
                 {!user && (
                   <button
                     onClick={() => {

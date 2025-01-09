@@ -1,35 +1,45 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import NotFound from './page/NotFound';
-import Home from './page/Home';
-import Man from './page/Man';
-import ProductDetail from './page/ProductDetail';
-import MyCart from './page/MyCart';
-import Women from './page/Women';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import NotFound from "./page/NotFound";
+import Home from "./page/Home";
+import Man from "./page/Man";
+import ProductDetail from "./page/ProductDetail";
+import MyCart from "./page/MyCart";
+import Women from "./page/Women";
+import New from "./page/New";
+import ProtectedRoute from "./page/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <App />,
     errorElement: <NotFound />,
     children: [
-      { index: true, path: '/', element: <Home /> },
-      { path: '/products/women', element:<Women/>  },
-      { path: '/products/man', element: <Man /> },
-      { path: '/products/:id', element: <ProductDetail /> },
-      { path: '/cart', element: <MyCart /> },
+      { index: true, path: "/", element: <Home /> },
+      { path: "/products/women", element: <Women /> },
+      { path: "/products/man", element: <Man /> },
+      { path: "/products/:id", element: <ProductDetail /> },
+      {
+        path: "/products/new",
+        element: (
+          <ProtectedRoute requireAdmin>
+            <New />
+          </ProtectedRoute>
+        ),
+      },
+      { path: "/cart", element: <MyCart /> },
     ],
   },
 ]);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router}/>
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
