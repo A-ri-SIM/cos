@@ -1,0 +1,25 @@
+input,
+select {
+  padding: 0.5rem;
+  outline: none;
+  border: 1px solid gray;
+  margin: 1rem 0;
+}
+
+@media (min-width: 769px) {
+  #product_img {
+    width: 33%;
+  }
+  form {
+    width: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  #product_img {
+    width: 90%;
+  }
+  form {
+    width: 100%;
+  }
+}
