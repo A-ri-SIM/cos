@@ -5,25 +5,48 @@ import styles from "./New.module.css";
 
 export default function New() {
   const [product, setProduct] = useState({});
-  const [file, setFile] = useState();
+  const [files, setFiles] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsUploading(true);
-    uploadImage(file)
-      .then((url) => {
-        addNewProduct(product, url).then(() => {
-          alert(`🎉 Product addition completed! 🎉`);
-        });
-      })
-      .finally(() => setIsUploading(false));
+    // uploadImage(file)
+    //   .then((url) => {
+    //     addNewProduct(product, url).then(() => {
+    //       alert(`🎉 Product addition completed! 🎉`);
+    //     });
+    //   })
+    //   .finally(() => setIsUploading(false));
+    try {
+      const uploadPromises = files.map((file) => uploadImage(file));
+      const urls = await Promise.all(uploadPromises);
+      console.log(urls);
+      if (!Array.isArray(urls) || urls.length < 2) {
+        throw new Error(
+          "이미지 업로드 실패: 최소 2개의 유효한 URL이 필요합니다."
+        );
+      }
+      const imageUrl1 = urls[0];
+      const imageUrl2 = urls[1];
+      await addNewProduct(product, [imageUrl1, imageUrl2]);
+      alert(`🎉 Product addition completed! 🎉`);
+    } catch (error) {
+      console.error("이미지 업로드 오류:", error);
+      alert("이미지 업로드에 실패했습니다. 다시 시도해주세요.");
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
+    const { name, value, files: selectedFiles } = e.target;
+    // if (name === "file") {
+    //   setFile(files && files[0]);
+    //   return;
+    // }
     if (name === "file") {
-      setFile(files && files[0]);
+      setFiles(Array.from(selectedFiles));
       return;
     }
 
@@ -52,20 +75,30 @@ export default function New() {
     <div className="pt-5 w-100">
       <h6 className="text-center mx-5">New product registration </h6>
       <section className="mt-4 d-flex flex-column flex-md-row justify-content-md-around align-items-center">
-        {file && (
+        {/* {file && (
           <img
             id={styles.product_img}
             className="px-5 ms-md-4"
             src={URL.createObjectURL(file)}
             alt="local file"
           />
-        )}
+        )} */}
+        {files.map((file, index) => (
+          <img
+            key={index}
+            id={styles.product_img}
+            className="px-2 ms-md-2"
+            src={URL.createObjectURL(file)}
+            alt={`file-${index}`}
+          />
+        ))}
         <form className="d-flex flex-column p-5">
           <input
             type="file"
             accept="image/*"
             name="file"
             required
+            multiple
             onChange={handleChange}
           />
           <input
