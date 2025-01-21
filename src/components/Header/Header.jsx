@@ -46,7 +46,7 @@ export default function Header() {
           <div>
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link to={"/products/woman"} className="nav-link pb-0">
+                <Link to={"/products/women"} className="nav-link pb-0">
                   Women
                 </Link>
               </li>

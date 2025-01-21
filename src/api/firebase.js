@@ -61,3 +61,12 @@ export async function addNewProduct(product, [imageUrl1, imageUrl2]) {
     size: product.size.split(","),
   });
 }
+
+export async function getProducts() {
+  return get(ref(database, "products")).then((snapshot) => {
+    if (snapshot.exists()) {
+      return Object.values(snapshot.val());
+    }
+    return [];
+  });
+}
