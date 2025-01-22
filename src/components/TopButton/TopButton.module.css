@@ -1,0 +1,21 @@
+#btnBox {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+#btnBox:hover {
+  animation: updown 1s infinite cubic-bezier(0.57, 0.02, 0.47, 1.26);
+}
+
+@keyframes updown {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
