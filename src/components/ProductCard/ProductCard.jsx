@@ -9,7 +9,7 @@ export default function ProductCard({
     <li
       onMouseEnter={() => setCurrentImage(hoverImage)}
       onMouseLeave={() => setCurrentImage(image)}
-      className="col-lg-3 col-md-6 p-3 gap-4"
+      className="col-lg-3 col-md-6 p-4 gap-4"
       id={styles.card}
     >
       <img src={currentImage} alt={title} className="w-100 mb-3" />

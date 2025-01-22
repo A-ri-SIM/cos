@@ -3,20 +3,24 @@ import React from "react";
 import { getProducts } from "../../api/firebase";
 import ProductCard from "../ProductCard/ProductCard";
 
-export default function Products({ section }) {
+export default function Products({ section, category }) {
   const {
     isLoading,
     error,
     data: products,
   } = useQuery({ queryKey: ["products"], queryFn: getProducts });
-  console.log(section);
 
   const filteredProducts = Array.isArray(products)
-    ? products.filter((product) => product.section === section)
+    ? products.filter((product) => {
+        const matchesSection = product.section === section;
+        const matchesCategory =
+          category === "all" || product.category === category;
+        return matchesSection && matchesCategory;
+      })
     : [];
 
   return (
-    <div className="container-fluid p-5">
+    <div className="container-fluid px-5">
       {isLoading && <p>Loading...</p>}
       {error && <p>{error}</p>}
       <ul className="row">

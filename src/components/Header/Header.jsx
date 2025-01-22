@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
-import { login, logout, onAuthStateChange } from "../../api/firebase";
 import User from "../User/User";
 import { FiPlus } from "react-icons/fi";
 import { useAuthContext } from "../context/AuthContext";
