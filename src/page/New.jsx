@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { uploadImage } from "../api/uploader";
 import { addNewProduct } from "../api/firebase";
 import styles from "./New.module.css";
+import Button from "../components/Button/Button";
 
 export default function New() {
   const [product, setProduct] = useState({});
@@ -14,18 +15,11 @@ export default function New() {
     try {
       const uploadPromises = files.map((file) => uploadImage(file));
       const urls = await Promise.all(uploadPromises);
-      // console.log(urls);
-      // if (!Array.isArray(urls) || urls.length < 2) {
-      //   throw new Error(
-      //     "이미지 업로드 실패: 최소 2개의 유효한 URL이 필요합니다."
-      //   );
-      // }
       const imageUrl1 = urls[0];
       const imageUrl2 = urls[1];
       await addNewProduct(product, [imageUrl1, imageUrl2]);
       alert(`🎉 Product addition completed! 🎉`);
     } catch (error) {
-      // console.error("이미지 업로드 오류:", error);
       alert("Failed to upload image. Please try again.");
     } finally {
       setIsUploading(false);
@@ -137,14 +131,11 @@ export default function New() {
             placeholder="size [','로 구분]"
             onChange={handleChange}
           />
-          <button
-            type="button"
-            className="btn btn-outline-dark mt-4"
+          <Button
             onClick={handleSubmit}
             disabled={isUploading}
-          >
-            {isUploading ? "Uploading..." : "Upload"}
-          </button>
+            text={isUploading ? "Uploading..." : "Upload"}
+          />
         </form>
       </section>
     </div>

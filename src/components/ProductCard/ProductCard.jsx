@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import styles from "./ProductCard.module.css";
+import { useNavigate } from "react-router-dom";
 
 export default function ProductCard({
+  product,
   product: { id, image, hoverImage, title, price },
 }) {
   const [currentImage, setCurrentImage] = useState(image);
+  const navigate = useNavigate();
   return (
     <li
+      onClick={() => {
+        navigate(`/products/${id}`, { state: { product } });
+      }}
       onMouseEnter={() => setCurrentImage(hoverImage)}
       onMouseLeave={() => setCurrentImage(image)}
       className="col-lg-3 col-md-6 p-4 gap-4"
