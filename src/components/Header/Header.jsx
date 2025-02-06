@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import User from "../User/User";
 import { FiPlus } from "react-icons/fi";
-import { useAuthContext } from "../context/AuthContext";
+import { useAuthContext } from "../../context/AuthContext";
+import CartStatus from "../CartStatus/CartStatus";
 
 export default function Header() {
   const { user, login, logout } = useAuthContext();
@@ -59,13 +60,14 @@ export default function Header() {
           <div>
             <ul className="navbar-nav ">
               <li className="nav-item ">
-                <Link className="nav-link pb-0">cart</Link>
+                <Link to={"/cart"} className="nav-link pb-0">
+                  <CartStatus />
+                </Link>
               </li>
               {user && user.isAdmin && (
                 <li className="nav-item d-flex align-items-end ">
                   <Link to={"/products/new"} className="nav-link  py-0">
-                    <FiPlus className="d-none d-lg-block pb-1" />
-                    <p className="d-lg-none pt-2 m-0">new</p>
+                    <FiPlus className="d-none d-lg-block pb-1 fs-5" />
                   </Link>
                 </li>
               )}

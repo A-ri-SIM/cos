@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import Button from "../components/Button/Button";
 import styles from "./ProductDetail.module.css";
+import { useAuthContext } from "../context/AuthContext";
+import { addOrUpdateToCart } from "../api/firebase";
 
 export default function ProductDetail() {
+  const { uid } = useAuthContext();
+
   const {
     state: {
-      product: { id, image, hoverImage, title, price, category, size },
+      product: { id, image, hoverImage, title, price, category, size, section },
     },
   } = useLocation();
 
@@ -17,7 +21,16 @@ export default function ProductDetail() {
   };
 
   const handleClick = (e) => {
-    console.log(id);
+    const product = {
+      id,
+      image,
+      title,
+      price,
+      size: selected,
+      quantity: 1,
+      section,
+    };
+    addOrUpdateToCart(uid, product);
   };
 
   return (
@@ -84,7 +97,10 @@ export default function ProductDetail() {
         </button>
       </div>
       <div className="w-100 w-md-50 p-5 d-flex flex-column">
-        <p>{category}</p>
+        <div className="d-flex">
+          <p className="pe-2 border-end border-1 border-black">{section}</p>
+          <p className="px-2">{category}</p>
+        </div>
         <h4 className="mb-4">{title}</h4>
         <h6>{`￦ ${price}`}</h6>
         <div className="d-flex align-items-center">
