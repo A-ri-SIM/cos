@@ -1,5 +1,11 @@
 import React from "react";
 
 export default function PriceCard({ text, price }) {
-  return <div></div>;
+  const formattedPrice = Number(price).toLocaleString();
+  return (
+    <div>
+      <p>{text}</p>
+      <p className="fw-bolder">{`￦ ${formattedPrice}`}</p>
+    </div>
+  );
 }

@@ -1,0 +1,20 @@
+.cartImg {
+  width: 200px;
+  height: 250px;
+  overflow: hidden;
+  margin-right: 4rem;
+}
+
+.quantityBtn {
+  margin: 0 5px;
+  cursor: pointer;
+  transition: all 300ms ease;
+}
+
+.quantityBtn:hover {
+  scale: 1.1;
+}
+
+#trash:hover {
+  color: red;
+}
