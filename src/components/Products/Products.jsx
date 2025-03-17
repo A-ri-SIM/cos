@@ -1,14 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { getProducts } from "../../api/firebase";
 import ProductCard from "../ProductCard/ProductCard";
+import useProducts from "../../hooks/useProducts";
 
 export default function Products({ section, category }) {
   const {
-    isLoading,
-    error,
-    data: products,
-  } = useQuery({ queryKey: ["products"], queryFn: getProducts });
+    productsQuery: { isLoading, error, data: products },
+  } = useProducts();
 
   const filteredProducts = Array.isArray(products)
     ? products.filter((product) => {

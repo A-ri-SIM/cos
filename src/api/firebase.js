@@ -83,7 +83,7 @@ export async function addOrUpdateToCart(userId, product) {
   return set(ref(database, `cart/${userId}/${addSelect}`), product);
 }
 
-export async function removeFromCart(userId) {
+export async function removeFromCart(userId, product) {
   const removeSelect = `${product.id}${product.size}`;
   return remove(ref(database, `cart/${userId}/${removeSelect}`));
 }

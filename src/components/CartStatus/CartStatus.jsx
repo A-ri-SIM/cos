@@ -1,15 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { getCart } from "../../api/firebase";
-import { useAuthContext } from "../../context/AuthContext";
 import styles from "./CartStatus.module.css";
+import useCart from "../../hooks/useCart";
 
 export default function CartStatus() {
-  const { uid } = useAuthContext();
-  const { data: product } = useQuery({
-    queryKey: ["cart"],
-    queryFn: () => getCart(uid),
-  });
+  const {
+    cartQuery: { data: product },
+  } = useCart();
 
   return (
     <div className="d-flex">

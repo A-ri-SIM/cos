@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { uploadImage } from "../api/uploader";
-import { addNewProduct } from "../api/firebase";
 import styles from "./New.module.css";
 import Button from "../components/Button/Button";
+import useProducts from "../hooks/useProducts";
 
 export default function New() {
   const [product, setProduct] = useState({});
   const [files, setFiles] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
+  const { addProduct } = useProducts();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,10 +16,24 @@ export default function New() {
     try {
       const uploadPromises = files.map((file) => uploadImage(file));
       const urls = await Promise.all(uploadPromises);
-      const imageUrl1 = urls[0];
-      const imageUrl2 = urls[1];
-      await addNewProduct(product, [imageUrl1, imageUrl2]);
-      alert(`🎉 Product addition completed! 🎉`);
+
+      const productData = {
+        ...product,
+        images: urls,
+        image: urls[0],
+        hoverImage: urls[1],
+      };
+      await addProduct.mutate(
+        { product: productData, imageUrls: urls },
+        {
+          onSuccess: () => {
+            alert("🎉 Product addition completed! 🎉");
+          },
+          onError: () => {
+            alert("Failed to add product. Please try again.");
+          },
+        }
+      );
     } catch (error) {
       alert("Failed to upload image. Please try again.");
     } finally {

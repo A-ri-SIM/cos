@@ -2,18 +2,17 @@ import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import Button from "../components/Button/Button";
 import styles from "./ProductDetail.module.css";
-import { useAuthContext } from "../context/AuthContext";
-import { addOrUpdateToCart } from "../api/firebase";
+import useCart from "../hooks/useCart";
 
 export default function ProductDetail() {
-  const { uid } = useAuthContext();
+  const { addOrUpdateItem } = useCart();
 
   const {
     state: {
       product: { id, image, hoverImage, title, price, category, size, section },
     },
   } = useLocation();
-
+  const [success, setSuccess] = useState();
   const [selected, setSelected] = useState(size && size[0]);
 
   const handleSelect = (e) => {
@@ -30,7 +29,16 @@ export default function ProductDetail() {
       quantity: 1,
       section,
     };
-    addOrUpdateToCart(uid, product);
+    setSuccess(true);
+    try {
+      addOrUpdateItem.mutate(product, {
+        onSuccess: () => {
+          alert("🎉 Added to cart completed 🎉");
+        },
+      });
+    } finally {
+      setSuccess(false);
+    }
   };
 
   return (
@@ -114,7 +122,11 @@ export default function ProductDetail() {
               size.map((size, index) => <option key={index}>{size}</option>)}
           </select>
         </div>
-        <Button text="add to cart" onClick={handleClick} />
+        <Button
+          onClick={handleClick}
+          disabled={success}
+          text={success ? "adding..." : "add to cart"}
+        />
       </div>
     </section>
   );

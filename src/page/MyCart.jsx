@@ -1,23 +1,17 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getCart } from "../api/firebase";
-import { useAuthContext } from "../context/AuthContext";
 import CartItem from "../components/CartItem/CartItem";
 import PriceCard from "../components/PriceCard/PriceCard";
 import { FaPlus, FaEquals } from "react-icons/fa6";
 import styles from "./MyCart.module.css";
 import Button from "../components/Button/Button";
+import useCart from "../hooks/useCart";
 
 const SHIPPING = 3000;
 
 export default function MyCart() {
-  const { uid } = useAuthContext();
-  const { isLoading, data: product } = useQuery({
-    queryKey: ["cart"],
-    queryFn: () => {
-      console.log("hi");
-    },
-  });
+  const {
+    cartQuery: { isLoading, data: product },
+  } = useCart();
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -52,7 +46,10 @@ export default function MyCart() {
           <ul>
             {product &&
               product.map((product) => (
-                <CartItem key={product.id} product={product} uid={uid} />
+                <CartItem
+                  key={`${product.id}-${product.size}`}
+                  product={product}
+                />
               ))}
           </ul>
           <div className="d-flex justify-content-around align-items-center my-5 text-center">

@@ -4,21 +4,20 @@ import {
   PiMinusCircleLight,
   PiTrashLight,
 } from "react-icons/pi";
-import { addOrUpdateToCart, removeFromCart } from "../../api/firebase";
 import styles from "./CartItem.module.css";
+import useCart from "../../hooks/useCart";
 
-export default function CartItem({ product, uid }) {
+export default function CartItem({ product }) {
+  const { addOrUpdateItem, removeItem } = useCart();
   const handleMinus = () => {
     if (product.quantity < 2) return;
-    addOrUpdateToCart(uid, { ...product, quantity: product.quantity - 1 });
+    addOrUpdateItem.mutate({ ...product, quantity: product.quantity - 1 });
   };
   const handlePlus = () => {
-    console.log(product);
-
-    addOrUpdateToCart(uid, { ...product, quantity: product.quantity + 1 });
+    addOrUpdateItem.mutate({ ...product, quantity: product.quantity + 1 });
   };
   const handleDelete = () => {
-    removeFromCart(uid, product.id);
+    removeItem.mutate(product);
   };
   return (
     <li
