@@ -8,7 +8,7 @@ export default function CartStatus() {
   } = useCart();
 
   return (
-    <div className="d-flex">
+    <div className={`d-flex ${styles.cart_btn}`}>
       cart
       {product && (
         <p

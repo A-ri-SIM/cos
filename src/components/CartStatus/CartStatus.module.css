@@ -1,3 +1,7 @@
+.cart_btn {
+  cursor: pointer;
+}
+
 #cart_counte {
   width: 19px;
   height: 19px;

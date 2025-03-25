@@ -3,8 +3,10 @@ import { useLocation } from "react-router-dom";
 import Button from "../components/Button/Button";
 import styles from "./ProductDetail.module.css";
 import useCart from "../hooks/useCart";
+import { useAuthContext } from "../context/AuthContext";
 
 export default function ProductDetail() {
+  const { user } = useAuthContext();
   const { addOrUpdateItem } = useCart();
 
   const {
@@ -31,11 +33,19 @@ export default function ProductDetail() {
     };
     setSuccess(true);
     try {
-      addOrUpdateItem.mutate(product, {
-        onSuccess: () => {
-          alert("🎉 Added to cart completed 🎉");
-        },
-      });
+      if (!user) {
+        addOrUpdateItem.mutate(product, {
+          onSuccess: () => {
+            alert("Please log in first🫣");
+          },
+        });
+      } else {
+        addOrUpdateItem.mutate(product, {
+          onSuccess: () => {
+            alert("🎉 Added to cart completed 🎉");
+          },
+        });
+      }
     } finally {
       setSuccess(false);
     }

@@ -8,6 +8,9 @@ import CartStatus from "../CartStatus/CartStatus";
 
 export default function Header() {
   const { user, login, logout } = useAuthContext();
+  const handleClick = () => {
+    alert("Please log in first🫣");
+  };
 
   return (
     <nav
@@ -59,11 +62,20 @@ export default function Header() {
           </div>
           <div>
             <ul className="navbar-nav ">
-              <li className="nav-item ">
-                <Link to={"/cart"} className="nav-link pb-0">
-                  <CartStatus />
-                </Link>
-              </li>
+              {!user && (
+                <li className="nav-item " onClick={handleClick}>
+                  <div className="nav-link pb-0">
+                    <CartStatus />
+                  </div>
+                </li>
+              )}
+              {user && (
+                <li className="nav-item ">
+                  <Link to={"/cart"} className="nav-link pb-0">
+                    <CartStatus />
+                  </Link>
+                </li>
+              )}
               {user && user.isAdmin && (
                 <li className="nav-item d-flex align-items-end ">
                   <Link to={"/products/new"} className="nav-link  py-0">
